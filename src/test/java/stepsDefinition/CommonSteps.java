@@ -1,6 +1,7 @@
 package stepsDefinition;
 
 import commons.BasePage;
+import commons.ConfigLoaderEnvironment;
 import hooks.TestContext;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -19,7 +20,7 @@ public class CommonSteps {
 
     @Given("User was on the end user site")
     public void userWasOnTheEndUserSite() {
-        basePage.openPageUrl("http://live.techpanda.org/");
+        basePage.openPageUrl(ConfigLoaderEnvironment.config.getString("app.EndUserUrl"));
     }
 
     @When("User click to {string} link at the footer")

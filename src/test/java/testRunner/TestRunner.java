@@ -12,7 +12,7 @@ import org.testng.annotations.DataProvider;
         plugin = {"pretty", "html:target/cucumber-reports/TestRunnerCategoryCMS.html",
                 "json:target/cucumber-reports/TestRunnerCategoryCMS.json",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"},
-        tags = "@register"
+        tags = "@test"
 )
 
 public class TestRunner extends AbstractTestNGCucumberTests {

@@ -1,5 +1,6 @@
 package hooks;
 
+import commons.ConfigLoaderEnvironment;
 import driver.DriverManager;
 import io.cucumber.java.*;
 import org.openqa.selenium.OutputType;
@@ -9,6 +10,7 @@ public class CucumberHooks {
 
     @BeforeAll
     public static void beforeAll() {
+        ConfigLoaderEnvironment.getConfig();
     }
 
     @AfterAll

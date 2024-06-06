@@ -13,7 +13,6 @@ public class DriverFactory {
 
     public WebDriver createDriver() {
         String browserName = System.getProperty("browser");
-        browserName = "chrome";
         WebDriver driver = setupBrowser(browserName);
         DriverManager.setDriver(driver);
         return driver;

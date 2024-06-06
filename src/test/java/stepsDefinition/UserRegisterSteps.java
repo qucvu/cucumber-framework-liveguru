@@ -27,7 +27,7 @@ public class UserRegisterSteps {
 
     @Then("User should navigate to the Register Page")
     public void userNavigateToTheRegisterPage() {
-//        testContext.verifyTrue()
+        testContext.verifyTrue(userRegisterPage.isCreateAnAccountTitleDisplayed());
     }
 
     @Given("User enters the valid inputs")

@@ -1,13 +1,11 @@
 package hooks;
 
 import commons.BasePage;
-import commons.VerificationFailures;
 import driver.DriverFactory;
 import driver.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ThreadGuard;
 import org.testng.Assert;
-import org.testng.Reporter;
 import pageObjects.UserAccountPageObject;
 import pageObjects.UserHomePageObject;
 import pageObjects.UserLoginPageObject;
@@ -59,41 +57,40 @@ public class TestContext {
         return userLoginPage;
     }
 
-    public boolean verifyTrue(boolean condition) {
-        boolean pass = true;
-        try {
-            Assert.assertTrue(condition);
-
-        } catch (Throwable e) {
-            pass = false;
-            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
-            Reporter.getCurrentTestResult().setThrowable(e);
+    public boolean verifyTrue(Boolean condition) {
+        if (condition) {
+//            LogUtils.info("Verify TRUE: " + condition);
+//            if (ExtentTestManager.getExtentTest() != null) {
+//                ExtentReportManager.pass("Verify TRUE: " + condition);
+//            }
+//            AllureManager.saveTextLog("Verify TRUE: " + condition);
+        } else {
+            Assert.assertTrue(false, "The condition is FALSE.");
         }
-        return pass;
+        return condition;
     }
 
-    public boolean verifyFalse(boolean condition) {
-        boolean pass = true;
-        try {
-            Assert.assertFalse(condition);
-        } catch (Throwable e) {
-            pass = false;
-            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
-            Reporter.getCurrentTestResult().setThrowable(e);
+    public boolean verifyTrue(Boolean condition, String message) {
+        if (!condition) {
+            Assert.fail(message);
         }
-        return pass;
+        return true;
     }
 
-    public boolean verifyEquals(Object actual, Object expected) {
-        boolean pass = true;
-        try {
-            Assert.assertEquals(actual, expected);
-        } catch (Throwable e) {
-            pass = false;
-            VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
-            Reporter.getCurrentTestResult().setThrowable(e);
+    public boolean verifyEquals(Object value1, Object value2) {
+        boolean result = value1.equals(value2);
+        if (!result) {
+            Assert.assertEquals(value1, value2, value1 + " != " + value2);
         }
-        return pass;
+        return result;
+    }
+
+    public boolean verifyEquals(Object value1, Object value2, String message) {
+        boolean result = value1.equals(value2);
+        if (!result) {
+            Assert.assertEquals(value1, value2, message);
+        }
+        return result;
     }
 
 

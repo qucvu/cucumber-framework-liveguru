@@ -16,4 +16,8 @@ public class UserRegisterPageObject extends BasePage {
     }
 
 
+    public boolean isCreateAnAccountTitleDisplayed() {
+        waitForElementVisibility(UserRegisterPageUI.CREATE_AN_ACCOUNT_PAGE_TITLE);
+        return isElementDisplayed(UserRegisterPageUI.CREATE_AN_ACCOUNT_PAGE_TITLE);
+    }
 }

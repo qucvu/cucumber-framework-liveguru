@@ -1,7 +1,8 @@
 package utilities;
 
-import com.github.javafaker.CreditCardType;
-import com.github.javafaker.Faker;
+
+import net.datafaker.Faker;
+import net.datafaker.providers.base.Finance;
 
 import java.nio.ByteBuffer;
 import java.util.Base64;
@@ -90,7 +91,7 @@ public class DataHelper {
     }
 
     public String getVisaCarNumber() {
-        return faker.finance().creditCard(CreditCardType.VISA);
+        return faker.finance().creditCard(Finance.CreditCardType.VISA);
     }
 
     public String getCardCodeNumber() {

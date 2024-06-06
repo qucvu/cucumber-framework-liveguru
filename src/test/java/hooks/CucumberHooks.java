@@ -2,6 +2,8 @@ package hooks;
 
 import driver.DriverManager;
 import io.cucumber.java.*;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 public class CucumberHooks {
 
@@ -11,31 +13,24 @@ public class CucumberHooks {
 
     @AfterAll
     public static void afterAll() {
-        System.out.println("================ afterAll ================");
 
     }
 
     @Before
     public void beforeScenario() {
-        System.out.println("================ beforeScenario ================");
     }
 
     @After
     public void afterScenario(Scenario scenario) {
-        System.out.println("================ afterScenario ================");
         DriverManager.quit();
     }
 
-    @BeforeStep
-    public void beforeStep(Scenario scenario) {
-        System.out.println("================ beforeStep ================");
-    }
 
     @AfterStep
     public void afterStep(Scenario scenario) {
-        System.out.println("================ afterStep ================");
         if (scenario.isFailed()) {
-//            CaptureHelpers.takeScreenshot(scenario.getName());
+            final byte[] screenshot = ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", "Screenshot Failed");
         }
     }
 

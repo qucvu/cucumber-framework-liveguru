@@ -9,10 +9,11 @@ import org.testng.annotations.DataProvider;
         features = "src/test/java/features",
         monochrome = true,
         glue = {"stepsDefinition", "hooks"},
-        plugin = {"pretty", "html:target/cucumber-reports/TestRunnerCategoryCMS.html",
+        plugin = {"hooks.CucumberListener",
+                "pretty", "html:target/cucumber-reports/TestRunnerCategoryCMS.html",
                 "json:target/cucumber-reports/TestRunnerCategoryCMS.json",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"},
-        tags = "@test"
+        tags = "@userRegister"
 )
 
 public class TestRunner extends AbstractTestNGCucumberTests {

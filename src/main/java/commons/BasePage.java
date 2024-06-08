@@ -1,5 +1,6 @@
 package commons;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
@@ -7,13 +8,15 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pageObjects.UserAccountPageObject;
 import pageUIs.LiveGuruBasePageUI;
 
+import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class BasePage {
     private final int longTimeout = GlobalConstants.LONG_TIMEOUT;
@@ -618,6 +621,15 @@ public class BasePage {
         return sortList.equals(dataList);
     }
 
+    public boolean isDataStringSortAscLamDa(String locatorType, String... dynamicValues) {
+        List<WebElement> elementList = getListElements(locatorType, dynamicValues);
+        List<String> dataList = elementList.stream().map(WebElement::getText).toList();
+        List<String> sortList = new ArrayList<String>(dataList);
+        Collections.sort(sortList);
+        return sortList.equals(dataList);
+    }
+
+
     public boolean isDataStringSortDescLamDa(String locatorType) {
         List<WebElement> elementList = getListElements(locatorType);
         List<String> dataList = elementList.stream().map(WebElement::getText).toList();
@@ -626,6 +638,16 @@ public class BasePage {
         Collections.reverse(sortList);
         return sortList.equals(dataList);
     }
+
+    public boolean isDataStringSortDescLamDa(String locatorType, String... dynamicValues) {
+        List<WebElement> elementList = getListElements(locatorType, dynamicValues);
+        List<String> dataList = elementList.stream().map(WebElement::getText).toList();
+        List<String> sortList = new ArrayList<String>(dataList);
+        Collections.sort(sortList);
+        Collections.reverse(sortList);
+        return sortList.equals(dataList);
+    }
+
 
     public boolean isDataFloatSortAscLamDa(String locatorType) {
         List<WebElement> elementList = getListElements(locatorType);
@@ -641,6 +663,45 @@ public class BasePage {
         List<Float> sortList = new ArrayList<Float
                 >(dataList);
         Collections.sort(sortList);
+        Collections.reverse(sortList);
+        return sortList.equals(dataList);
+    }
+
+    public boolean isDataNumberSortAsc(String locator, String... dynamicValues) {
+        List<WebElement> elementList = getListElements(locator, dynamicValues);
+        ArrayList<Long> dataList = new ArrayList<Long>();
+        for (WebElement element : elementList) {
+            dataList.add(Long.parseLong(element.getText().trim()));
+        }
+        List<Long> sortList = new ArrayList<Long>(dataList);
+        Collections.sort(sortList);
+        return sortList.equals(dataList);
+    }
+
+
+    public boolean isDataNumberSortDesc(String locator, String... dynamicValues) {
+        List<WebElement> elementList = getListElements(locator, dynamicValues);
+        ArrayList<Long> dataList = new ArrayList<Long>();
+        for (WebElement element : elementList) {
+            dataList.add(Long.parseLong(element.getText().trim()));
+        }
+        List<Long> sortList = new ArrayList<Long>(dataList);
+        Collections.sort(sortList);
+        Collections.reverse(sortList);
+        return sortList.equals(dataList);
+    }
+
+    public boolean isDataDateSortByOption(String option, String locator, String... dynamicValues) {
+        List<WebElement> elementList = getListElements(locator, dynamicValues);
+        ArrayList<Date> dataList = new ArrayList<Date>();
+        for (WebElement element : elementList) {
+            dataList.add(convertStringToDate(element.getText().trim(), "MMM dd, yyyy h:mm:ss a"));
+        }
+        List<Date> sortList = new ArrayList<Date>(dataList);
+        Collections.sort(sortList);
+        if (option.equals("asc")) {
+            Collections.reverse(sortList);
+        }
         Collections.reverse(sortList);
         return sortList.equals(dataList);
     }
@@ -671,5 +732,215 @@ public class BasePage {
         waitForElementClickable(LiveGuruBasePageUI.FOOTER_LINK_BY_TEXT, textLink);
         clickToElement(LiveGuruBasePageUI.FOOTER_LINK_BY_TEXT, textLink);
     }
+
+    public String getValueTextboxById(String id) {
+        waitForElementVisibility(LiveGuruBasePageUI.DYNAMIC_TEXTBOX_BY_ID, id);
+        return getElementAttribute("value", LiveGuruBasePageUI.DYNAMIC_TEXTBOX_BY_ID, id);
+    }
+
+
+    public void clickToDynamicLinkOnTheLeftSidebar(String linkText) {
+        waitForElementClickable(LiveGuruBasePageUI.DYNAMIC_LINK_AT_LEFT_SIDEBAR, linkText);
+        clickToElement(LiveGuruBasePageUI.DYNAMIC_LINK_AT_LEFT_SIDEBAR, linkText);
+    }
+
+    public boolean isCurrentActiveLinkAtAccountPageByText(String linkText) {
+        waitForElementVisibility(LiveGuruBasePageUI.CURRENT_ACTIVE_LINK_AT_LEFT_SIDEBAR, linkText);
+        return isElementDisplayed(LiveGuruBasePageUI.CURRENT_ACTIVE_LINK_AT_LEFT_SIDEBAR, linkText);
+    }
+
+    public UserAccountPageObject clickToMyAccountLinkAtAccountLinkHeader() {
+        waitForElementClickable(LiveGuruBasePageUI.MY_ACCOUNT_LINK_AT_ACCOUNT_HEADER);
+        clickToElement(LiveGuruBasePageUI.MY_ACCOUNT_LINK_AT_ACCOUNT_HEADER);
+        return new UserAccountPageObject(driver);
+    }
+
+//    public UserProductCategoryPO clickToTVLinkAtHeaderNav() {
+//        waitForElementClickable(LiveGuruBasePageUI.TV_LINK_AT_NAVIGATION_BAR);
+//        clickToElement(LiveGuruBasePageUI.TV_LINK_AT_NAVIGATION_BAR);
+//        return PageGeneratorManager.getUserProductCategoryPage(driver);
+//
+//    }
+
+    public void enterToTextboxEmptyValueById(String id) {
+        waitForAllElementVisibility(LiveGuruBasePageUI.DYNAMIC_TEXTBOX_BY_ID, id);
+        clearElement(LiveGuruBasePageUI.DYNAMIC_TEXTBOX_BY_ID, id);
+    }
+
+    public void selectToDefaultDropdownById(String Id, String textOption) {
+        waitForElementClickable(LiveGuruBasePageUI.DYNAMIC_DEFAULT_DROPDOWN_BY_ID, Id);
+        selectItemInDefaultDropdown(LiveGuruBasePageUI.DYNAMIC_DEFAULT_DROPDOWN_BY_ID, textOption, Id);
+    }
+
+    public void closeTheIncomingMessagePopupAdminPage() {
+        if (!isElementUndisplayed(LiveGuruBasePageUI.INCOMING_MESSAGE_POPUP_ADMIN_PAGE)) {
+            waitForElementClickable(LiveGuruBasePageUI.INCOMING_MESSAGE_POPUP_ADMIN_PAGE);
+            clickToElement(LiveGuruBasePageUI.CLOSE_LINK_INCOMING_MESSAGE_POPUP);
+        }
+    }
+
+    public void hoverToDynamicHeaderLinkByNameAdminPage(String name) {
+        waitForElementVisibility(LiveGuruBasePageUI.HEADER_LINK_BY_NAME_ADMIN_PAGE, name);
+        hoverMouseToElement(LiveGuruBasePageUI.HEADER_LINK_BY_NAME_ADMIN_PAGE, name);
+    }
+
+    public void clickToDynamicHeaderLinkByNameAdminPage(String name) {
+        waitForElementClickable(LiveGuruBasePageUI.HEADER_LINK_BY_NAME_ADMIN_PAGE, name);
+        clickToElement(LiveGuruBasePageUI.HEADER_LINK_BY_NAME_ADMIN_PAGE, name);
+
+    }
+
+    public boolean isMessageDisplayedAboveHeaderAdminPage(String message) {
+        waitForElementVisibility(LiveGuruBasePageUI.TITLE_MESSAGE_ABOVE_HEADER_BY_MESSAGE, message);
+        return isElementDisplayed(LiveGuruBasePageUI.TITLE_MESSAGE_ABOVE_HEADER_BY_MESSAGE, message);
+    }
+
+
+    public void clickToSubmitButtonAdminPage() {
+        waitForElementClickable(LiveGuruBasePageUI.SUBMIT_BUTTON);
+        clickToElement(LiveGuruBasePageUI.SUBMIT_BUTTON);
+    }
+
+
+    public void clickToSearchButtonAdminPage() {
+        waitForLoadingMaskUnInvisibility();
+        checkToDefaultCheckboxRadio(LiveGuruBasePageUI.SEARCH_BUTTON);
+
+    }
+
+    public void waitForLoadingMaskUnInvisibility() {
+        waitForElementInvisibility(LiveGuruBasePageUI.LOADING_MASK);
+    }
+
+    public boolean isFileDownloaded(String downloadPath, String fileName) {
+        boolean isDownloaded = false;
+        File dir = new File(downloadPath);
+        File[] dirContents = dir.listFiles();
+        for (int i = 0; i < Objects.requireNonNull(dirContents).length; i++) {
+            if (dirContents[i].getName().contains(fileName)) {
+                waitForFileToDownload(String.valueOf(dirContents[i]), GlobalConstants.LONG_TIMEOUT);
+                dirContents[i].delete();
+                isDownloaded = true;
+            }
+        }
+        return isDownloaded;
+    }
+
+    public boolean waitForFileToDownload(String expectedFullPathName, int maxWaitSeconds) {
+        File downloadedFile = new File(expectedFullPathName);
+        System.out.println("Download file: " + downloadedFile);
+        long startTime = System.currentTimeMillis();
+
+        while (!downloadedFile.exists()) {
+            long currentTime = System.currentTimeMillis();
+            long elapsedTime = TimeUnit.MILLISECONDS.toSeconds(currentTime - startTime);
+            if (elapsedTime > maxWaitSeconds) {
+                return false;
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
+    }
+
+    private static Date convertStringToDate(String dateString, String pattern) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+        try {
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void clickToSortASCByTitle(String title) {
+        waitForElementVisibility(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+        String titleAttribute = getElementAttribute("title", LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+        if (titleAttribute.equals("asc")) {
+            waitForElementClickable(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+            clickToElement(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+        }
+    }
+
+    public void clickToSortDESCByTitle(String title) {
+        waitForElementVisibility(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+        String titleAttribute = getElementAttribute("title", LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+        if (titleAttribute.equals("desc")) {
+            waitForElementClickable(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+            clickToElement(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+        }
+
+    }
+
+    public int getQuantityItemSelectedCheckboxAdminPage() {
+        waitForLoadingMaskUnInvisibility();
+        waitForAllElementVisibility(LiveGuruBasePageUI.CHECKBOX_ROW_ITEM);
+        List<WebElement> checkboxList = getListElements(LiveGuruBasePageUI.CHECKBOX_ROW_ITEM);
+        System.out.println("Size:" + checkboxList.size());
+        int countCheckboxSelected = 0;
+        for (WebElement checkbox : checkboxList) {
+            if (checkbox.isSelected()) {
+                countCheckboxSelected++;
+            }
+        }
+        return countCheckboxSelected;
+
+    }
+
+    public boolean isDataNumberSortASCByTitleColumn(String columnName) {
+        int columnIndex = getElementsSize(LiveGuruBasePageUI.INDEX_COLUMN_BY_COLUMN_NAME, columnName) + 1;
+        waitForLoadingMaskUnInvisibility();
+        waitForAllElementVisibility(LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
+        return isDataNumberSortAsc(LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
+    }
+
+    public boolean isDataNumberSortDESCByTitleColumn(String columnName) {
+        int columnIndex = getElementsSize(LiveGuruBasePageUI.INDEX_COLUMN_BY_COLUMN_NAME, columnName) + 1;
+        waitForLoadingMaskUnInvisibility();
+        waitForAllElementVisibility(LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
+        return isDataNumberSortDesc(LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
+    }
+
+    public boolean isDataDateSortByTitleColumnAndOption(String columnName, String option) {
+        int columnIndex = getElementsSize(LiveGuruBasePageUI.INDEX_COLUMN_BY_COLUMN_NAME, columnName) + 1;
+        waitForLoadingMaskUnInvisibility();
+        waitForAllElementVisibility(LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
+        if (option.equals("asc")) {
+            return isDataDateSortByOption("asc", LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
+        }
+        return isDataDateSortByOption("desc", LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
+    }
+
+
+    public boolean isDataStringSortASCByTitleColumn(String columnName) {
+        int columnIndex = getElementsSize(LiveGuruBasePageUI.INDEX_COLUMN_BY_COLUMN_NAME, columnName) + 1;
+        waitForLoadingMaskUnInvisibility();
+        waitForAllElementVisibility(LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
+        return isDataStringSortAscLamDa(LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
+    }
+
+    public boolean isDataStringSortDESCByTitleColumn(String columnName) {
+        int columnIndex = getElementsSize(LiveGuruBasePageUI.INDEX_COLUMN_BY_COLUMN_NAME, columnName) + 1;
+        waitForLoadingMaskUnInvisibility();
+        waitForAllElementVisibility(LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
+        return isDataStringSortDescLamDa(LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
+
+    }
+
+    public int getQuantityItemRowDisplayedAdminPage(WebDriver driver) {
+        waitForLoadingMaskUnInvisibility();
+        waitForAllElementVisibility(LiveGuruBasePageUI.CHECKBOX_ROW_ITEM);
+        return getElementsSize(LiveGuruBasePageUI.CHECKBOX_ROW_ITEM);
+    }
+
+    public void selectToViewPerPageDropdownAdminPage(String textValue) {
+        waitForElementClickable(LiveGuruBasePageUI.VIEW_PER_PAGE_DROPDOWN);
+        selectItemInDefaultDropdown(LiveGuruBasePageUI.VIEW_PER_PAGE_DROPDOWN, textValue);
+    }
+
 
 }

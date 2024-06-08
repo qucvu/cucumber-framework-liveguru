@@ -33,9 +33,11 @@ public class UserRegisterSteps {
     @Given("User enters the valid inputs")
     public void userEnterValidCredentials(DataTable dataTable) {
         Map<String, String> data = dataTable.asMap(String.class, String.class);
+        String email = data.get("Email").equals("unique_email") ? dataHelper.getUserEmail() : data.get("Email");
+        SharedState.getInstance().setEmail(email);
         basePage.enterToDynamicTextboxById("First name", "firstname", data.get("First Name"));
         basePage.enterToDynamicTextboxById("Last name", "lastname", data.get("Last Name"));
-        basePage.enterToDynamicTextboxById("Email", "email_address", data.get("Email").equals("unique_email") ? dataHelper.getUserEmail() : data.get("Email"));
+        basePage.enterToDynamicTextboxById("Email", "email_address", email);
         basePage.enterToDynamicTextboxById("Password", "password", data.get("Password"));
         basePage.enterToDynamicTextboxById("Confirmation Password", "confirmation", data.get("Confirm Password"));
     }

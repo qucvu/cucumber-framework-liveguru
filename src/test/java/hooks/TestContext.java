@@ -6,17 +6,20 @@ import driver.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ThreadGuard;
 import org.testng.Assert;
-import pageObjects.UserAccountPageObject;
-import pageObjects.UserHomePageObject;
-import pageObjects.UserLoginPageObject;
-import pageObjects.UserRegisterPageObject;
+import pageObjects.*;
+import reportConfigs.AllureManager;
+import stepsDefinition.SharedState;
 
 public class TestContext {
     private BasePage commonPage;
+    private SharedState sharedState;
     private UserRegisterPageObject userRegisterPage;
     private UserAccountPageObject userAccountPage;
     private UserHomePageObject userHomePage;
     private UserLoginPageObject userLoginPage;
+
+    private UserProductCategoryPageObject userProductCategory;
+    private UserProductDetailPageObject userProductDetailPage;
 
     public TestContext() {
         ThreadGuard.protect(new DriverFactory().createDriver());
@@ -27,6 +30,13 @@ public class TestContext {
             commonPage = new BasePage(DriverManager.getDriver());
         }
         return commonPage;
+    }
+
+    public SharedState getSharedState() {
+        if (sharedState == null) {
+            sharedState = new SharedState();
+        }
+        return sharedState;
     }
 
     public UserRegisterPageObject getUserRegisterPage() {
@@ -57,40 +67,46 @@ public class TestContext {
         return userLoginPage;
     }
 
-    public boolean verifyTrue(Boolean condition) {
-        if (condition) {
-//            LogUtils.info("Verify TRUE: " + condition);
-//            if (ExtentTestManager.getExtentTest() != null) {
-//                ExtentReportManager.pass("Verify TRUE: " + condition);
-//            }
-//            AllureManager.saveTextLog("Verify TRUE: " + condition);
-        } else {
-            Assert.assertTrue(false, "The condition is FALSE.");
+    public UserProductCategoryPageObject getUserProductCategoryPage() {
+        if (userProductCategory == null) {
+            userProductCategory = new UserProductCategoryPageObject(DriverManager.getDriver());
         }
-        return condition;
+        return userProductCategory;
     }
 
-    public boolean verifyTrue(Boolean condition, String message) {
-        if (!condition) {
-            Assert.fail(message);
+    public UserProductDetailPageObject getUserProductDetailPage() {
+        if (userProductDetailPage == null) {
+            userProductDetailPage = new UserProductDetailPageObject(DriverManager.getDriver());
         }
-        return true;
+        return userProductDetailPage;
+    }
+    
+    public void verifyTrue(boolean condition) {
+        Assert.assertTrue(condition);
+        AllureManager.saveTextLog("Verify TRUE: " + true);
     }
 
-    public boolean verifyEquals(Object value1, Object value2) {
+    public void verifyTrue(boolean condition, String message) {
+        Assert.assertTrue(condition, message);
+        AllureManager.saveTextLog("Verify TRUE: " + true);
+    }
+
+    public void verifyEquals(Object value1, Object value2) {
+        Assert.assertEquals(value1, value2);
         boolean result = value1.equals(value2);
         if (!result) {
-            Assert.assertEquals(value1, value2, value1 + " != " + value2);
+            AllureManager.saveTextLog("Verify Equals: " + value1 + " != " + value2);
         }
-        return result;
+        AllureManager.saveTextLog("Verify Equals: " + value1 + " = " + value2);
     }
 
-    public boolean verifyEquals(Object value1, Object value2, String message) {
+    public void verifyEquals(Object value1, Object value2, String message) {
+        Assert.assertEquals(value1, value2, message);
         boolean result = value1.equals(value2);
         if (!result) {
-            Assert.assertEquals(value1, value2, message);
+            AllureManager.saveTextLog("Verify Equals: " + value1 + " != " + value2);
         }
-        return result;
+        AllureManager.saveTextLog("Verify Equals: " + value1 + " = " + value2);
     }
 
 

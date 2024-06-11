@@ -3,6 +3,7 @@ package testRunner;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 
 @CucumberOptions(
@@ -13,9 +14,10 @@ import org.testng.annotations.DataProvider;
                 "pretty", "html:target/cucumber-reports/TestRunnerCategoryCMS.html",
                 "json:target/cucumber-reports/TestRunnerCategoryCMS.json",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"},
-        tags = "@userRegister"
+        tags = "@userProduct"
 )
 
+@Test
 public class TestRunner extends AbstractTestNGCucumberTests {
     @Override
     @DataProvider(parallel = false)

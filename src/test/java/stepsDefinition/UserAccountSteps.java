@@ -32,7 +32,7 @@ public class UserAccountSteps {
     public void userInfoIsDisplayedProperly(DataTable dataTable) {
         List<Map<String, String>> dataList = dataTable.asMaps(String.class, String.class);
         Map<String, String> data = dataList.get(0);
-        testContext.verifyEquals(userAccountPage.getValueTextboxById("email"), SharedState.getInstance().getEmail());
+        testContext.verifyEquals(userAccountPage.getValueTextboxById("email"), testContext.getSharedState().getDataContext("email"));
         testContext.verifyEquals(userAccountPage.getValueTextboxById("firstname"), data.get("firstName"));
         testContext.verifyEquals(userAccountPage.getValueTextboxById("lastname"), data.get("lastName"));
     }

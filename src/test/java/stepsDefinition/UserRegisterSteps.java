@@ -34,7 +34,8 @@ public class UserRegisterSteps {
     public void userEnterValidCredentials(DataTable dataTable) {
         Map<String, String> data = dataTable.asMap(String.class, String.class);
         String email = data.get("Email").equals("unique_email") ? dataHelper.getUserEmail() : data.get("Email");
-        SharedState.getInstance().setEmail(email);
+        testContext.getSharedState().setDataContext("email", email);
+        testContext.getSharedState().setDataContext("password", data.get("Password"));
         basePage.enterToDynamicTextboxById("First name", "firstname", data.get("First Name"));
         basePage.enterToDynamicTextboxById("Last name", "lastname", data.get("Last Name"));
         basePage.enterToDynamicTextboxById("Email", "email_address", email);

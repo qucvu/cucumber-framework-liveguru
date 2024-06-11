@@ -3,7 +3,7 @@ Feature: User Register
 
   Background:
     Given User was on the end user site
-    When User click to 'My Account' link at the footer
+    When User clicks to 'My Account' link at the footer
     And User click to `Create an Account` button
     Then User should navigate to the Register Page
 

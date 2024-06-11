@@ -1,6 +1,7 @@
 package driver;
 
 import commons.GlobalConstants;
+import enums.Browser;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -26,10 +27,11 @@ public class DriverFactory {
 
     private WebDriver setupBrowser(String browserName) {
         WebDriver driver;
-        switch (browserName.trim().toLowerCase()) {
-            case "chrome" -> driver = initChromeDriver();
-            case "firefox" -> driver = initFirefoxDriver();
-            case "edge" -> driver = initEdgeDriver();
+        Browser browser = Browser.valueOf(browserName.toUpperCase());
+        switch (browser) {
+            case CHROME -> driver = initChromeDriver();
+            case FIREFOX -> driver = initFirefoxDriver();
+            case EDGE -> driver = initEdgeDriver();
             default -> {
                 System.out.println("Browser: " + browserName + " is invalid, Launching Chrome browser default...");
                 driver = initChromeDriver();

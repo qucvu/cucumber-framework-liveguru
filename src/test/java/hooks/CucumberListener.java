@@ -55,7 +55,6 @@ public class CucumberListener implements EventListener {
     private void ScenarioFinished(TestCaseFinished event) {
         String featureName = event.getTestCase().getUri().toString();
 
-        //Tại đây thì chúng ta thống kê các Scenario. Vì trong Cucumber thì một test cases là một Scenario
         if (event.getResult().getStatus().toString().equals("PASSED")) {
             count_passedTCs = count_passedTCs + 1;
         }
@@ -67,13 +66,11 @@ public class CucumberListener implements EventListener {
         }
     }
 
-    // Step started event
     private void stepStarted(TestStepStarted event) {
 
         String stepName = "";
         String keyword = "";
 
-        // Check whether the event is from a hook or step
         if (event.getTestStep() instanceof PickleStepTestStep) {
             // TestStepStarted event implements PickleStepTestStep interface
             // Which have additional methods to interact with the event object
@@ -109,7 +106,6 @@ public class CucumberListener implements EventListener {
 
         }
         if (event.getResult().getStatus().toString().equals("FAILED")) {
-            System.out.println(event.getResult().getError());
         }
         if (event.getResult().getStatus().toString().equals("SKIPPED")) {
 

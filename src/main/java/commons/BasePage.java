@@ -9,9 +9,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageObjects.UserAccountPageObject;
+import pageObjects.UserLoginPageObject;
+import pageObjects.UserProductCategoryPageObject;
+import pageObjects.UserWishListPageObject;
 import pageUIs.LiveGuruBasePageUI;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -738,6 +747,39 @@ public class BasePage {
         return getElementAttribute("value", LiveGuruBasePageUI.DYNAMIC_TEXTBOX_BY_ID, id);
     }
 
+    public void clickToAccountLinkHeader() {
+        waitForElementClickable(LiveGuruBasePageUI.ACCOUNT_LINK_HEADER);
+        clickToElement(LiveGuruBasePageUI.ACCOUNT_LINK_HEADER);
+
+    }
+
+    public UserLoginPageObject clickToLoginLinkAtAccountLinkHeader() {
+        waitForElementClickable(LiveGuruBasePageUI.LOGIN_LINK_AT_ACCOUNT_HEADER);
+        clickToElement(LiveGuruBasePageUI.LOGIN_LINK_AT_ACCOUNT_HEADER);
+        return new UserLoginPageObject(driver);
+    }
+
+    public UserLoginPageObject clickToLogoutLinkAtAccountLinkHeader() {
+        waitForElementClickable(LiveGuruBasePageUI.LOGOUT_LINK_AT_ACCOUNT_HEADER);
+        clickToElement(LiveGuruBasePageUI.LOGOUT_LINK_AT_ACCOUNT_HEADER);
+        return new UserLoginPageObject(driver);
+    }
+
+
+    public UserWishListPageObject clickToMyWishlistLinkAtAccountLinkHeader() {
+        waitForElementClickable(LiveGuruBasePageUI.MY_WISHLIST_LINK_AT_ACCOUNT_HEADER);
+        clickToElement(LiveGuruBasePageUI.MY_WISHLIST_LINK_AT_ACCOUNT_HEADER);
+        return new UserWishListPageObject(driver);
+    }
+
+
+    public UserProductCategoryPageObject clickToMobileLinkAtHeaderNav() {
+        waitForElementClickable(LiveGuruBasePageUI.MOBILE_LINK_AT_NAVIGATION_BAR);
+        clickToElement(LiveGuruBasePageUI.MOBILE_LINK_AT_NAVIGATION_BAR);
+        return new UserProductCategoryPageObject(driver);
+
+    }
+
 
     public void clickToDynamicLinkOnTheLeftSidebar(String linkText) {
         waitForElementClickable(LiveGuruBasePageUI.DYNAMIC_LINK_AT_LEFT_SIDEBAR, linkText);
@@ -825,6 +867,41 @@ public class BasePage {
         }
         return isDownloaded;
     }
+
+    protected void deleteFileByFilePath(String filePath) {
+        try {
+            Files.deleteIfExists(
+                    Paths.get(filePath));
+        } catch (NoSuchFileException e) {
+            System.out.println(
+                    "No such file/directory exists");
+        } catch (DirectoryNotEmptyException e) {
+            System.out.println("Directory is not empty.");
+        } catch (IOException e) {
+            System.out.println("Invalid permissions.");
+        }
+
+    }
+
+    protected void writeDataIntoDataRecordByFileName(String data, String fileName) {
+        File file = new File(GlobalConstants.DATA_RECORD + fileName + ".txt");
+        FileWriter fr = null;
+        try {
+            fr = new FileWriter(file, true);
+            fr.write(data);
+            fr.write("\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                assert fr != null;
+                fr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public boolean waitForFileToDownload(String expectedFullPathName, int maxWaitSeconds) {
         File downloadedFile = new File(expectedFullPathName);

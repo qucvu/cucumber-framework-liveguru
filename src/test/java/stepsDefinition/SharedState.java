@@ -1,25 +1,22 @@
 package stepsDefinition;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SharedState {
-    private static SharedState instance;
-    private String email;
+    private final Map<String, Object> dataContext;
 
-    private SharedState() {
+    public SharedState() {
+        dataContext = new HashMap<String, Object>();
     }
 
-    public static SharedState getInstance() {
-        if (instance == null) {
-            instance = new SharedState();
-        }
-        return instance;
+    public void setDataContext(String key, Object value) {
+        dataContext.put(key, value);
     }
 
-    public String getEmail() {
-        return email;
+    public Object getDataContext(String key) {
+        return dataContext.get(key);
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
 }

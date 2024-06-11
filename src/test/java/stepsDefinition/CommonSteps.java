@@ -3,28 +3,59 @@ package stepsDefinition;
 import commons.BasePage;
 import commons.ConfigLoaderEnvironment;
 import hooks.TestContext;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pageObjects.UserHomePageObject;
 
 public class CommonSteps {
     TestContext testContext;
     UserHomePageObject userHomePage;
-    BasePage basePage;
+    BasePage commonPage;
 
     public CommonSteps(TestContext context) {
         this.testContext = context;
         userHomePage = testContext.getUserHomePage();
-        basePage = testContext.getBasePage();
+        commonPage = testContext.getBasePage();
     }
 
     @Given("User was on the end user site")
     public void userWasOnTheEndUserSite() {
-        basePage.openPageUrl(ConfigLoaderEnvironment.config.getString("app.EndUserUrl"));
+        commonPage.openPageUrl(ConfigLoaderEnvironment.config.getString("app.EndUserUrl"));
     }
 
-    @When("User click to {string} link at the footer")
+    @When("User clicks to {string} link at the footer")
     public void userClickToDynamicFooterLink(String linkText) {
-        basePage.clickToDynamicFooterLinkByText(linkText);
+        commonPage.clickToDynamicFooterLinkByText(linkText);
     }
+
+    @And("User clicks to 'Account' link at the header")
+    public void userClickToAccountLinkHeader() {
+        commonPage.clickToAccountLinkHeader();
+    }
+
+    @And("User clicks to 'Log In' link at the 'Account' header")
+    public void userClickToLoginLinkAtAccountLinkHeader() {
+        commonPage.clickToLoginLinkAtAccountLinkHeader();
+    }
+
+    @And("User clicks to 'Log Out' link at the 'Account' header")
+    public void userClickToLogoutLinkAtAccountLinkHeader() {
+        commonPage.clickToLogoutLinkAtAccountLinkHeader();
+    }
+
+
+    @And("User clicks on the 'Mobile' link in the header navigation")
+    public void userClickOnTheMobileLinkInHeader() {
+        commonPage.clickToMobileLinkAtHeaderNav();
+    }
+
+    @Then("The cost of the product should be the same on both pages")
+    public void theCostShouBeSameOnBothPages() {
+        float productPriceAtCategoryPage = (float) testContext.getSharedState().getDataContext("productPriceAtCategory");
+        float productPriceAtDetailPage = (float) testContext.getSharedState().getDataContext("productPriceAtDetailPage");
+        testContext.verifyEquals(productPriceAtCategoryPage, productPriceAtDetailPage);
+    }
+
 }

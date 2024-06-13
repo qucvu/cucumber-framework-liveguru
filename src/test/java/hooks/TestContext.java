@@ -17,9 +17,13 @@ public class TestContext {
     private UserAccountPageObject userAccountPage;
     private UserHomePageObject userHomePage;
     private UserLoginPageObject userLoginPage;
-
     private UserProductCategoryPageObject userProductCategory;
     private UserProductDetailPageObject userProductDetailPage;
+    private UserShoppingCartPageObject userShoppingCartPage;
+    private UserProductComparisonPageObject userProductComparisonPage;
+    private UserWishListPageObject userWishListPage;
+    private UserProductReviewPageObject userProductReviewPage;
+    private UserCheckoutPageObject userCheckoutPage;
 
     public TestContext() {
         ThreadGuard.protect(new DriverFactory().createDriver());
@@ -80,7 +84,44 @@ public class TestContext {
         }
         return userProductDetailPage;
     }
-    
+
+    public UserShoppingCartPageObject getUserShoppingCartPage() {
+        if (userShoppingCartPage == null) {
+            userShoppingCartPage = new UserShoppingCartPageObject(DriverManager.getDriver());
+        }
+        return userShoppingCartPage;
+    }
+
+    public UserProductComparisonPageObject getUserProductComparisonPage() {
+        if (userProductComparisonPage == null) {
+            userProductComparisonPage = new UserProductComparisonPageObject(DriverManager.getDriver());
+        }
+        return userProductComparisonPage;
+    }
+
+    public UserWishListPageObject getUserWishListPage() {
+        if (userWishListPage == null) {
+            userWishListPage = new UserWishListPageObject(DriverManager.getDriver());
+        }
+        return userWishListPage;
+    }
+
+    public UserProductReviewPageObject getUserProductReviewPage() {
+        if (userProductReviewPage == null) {
+            userProductReviewPage = new UserProductReviewPageObject(DriverManager.getDriver());
+        }
+        return userProductReviewPage;
+    }
+
+
+    public UserCheckoutPageObject getUserCheckoutPage() {
+        if (userCheckoutPage == null) {
+            userCheckoutPage = new UserCheckoutPageObject(DriverManager.getDriver());
+        }
+        return userCheckoutPage;
+    }
+
+
     public void verifyTrue(boolean condition) {
         Assert.assertTrue(condition);
         AllureManager.saveTextLog("Verify TRUE: " + true);

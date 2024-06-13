@@ -2,6 +2,7 @@ package stepsDefinition;
 
 import hooks.TestContext;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
 import pageObjects.UserProductCategoryPageObject;
 
 public class UserProductCategorySteps {
@@ -22,6 +23,27 @@ public class UserProductCategorySteps {
     @And("User opens the Product Details page for the product {string}")
     public void userOpenProductDetailPageByProductName(String productName) {
         userProductCategoryPage.openProductDetailPageByProductName(productName);
+    }
+
+    @And("User clicks to 'Add to Compare' link for the product: {string}")
+    public void userClicksToAddToCompareLinkForTheProduct(String productName) {
+        userProductCategoryPage.clickToAddToCompareLinkByProductName(productName);
+    }
+
+    @Then("The `Add to comparison list success` should be displayed for the product: {string}")
+    public void theAddToComparisonListSuccessMessageShouldBeDisplayedForTheProduct(String productName) {
+        testContext.verifyTrue(userProductCategoryPage.isAddProductToComparisonMessageDisplayed(productName));
+    }
+
+    @And("User clicks to the `Compare` button")
+    public void userClicksTheCompareButton() {
+        userProductCategoryPage.clickToCompareButton();
+        userProductCategoryPage.switchToProductComparisonPage();
+    }
+
+    @And("User clicks on the `Add to Wishlist` button for the product: {string}")
+    public void userClicksOnTheAddToWishlistButtonForTheProduct(String productShareWishlist) {
+        userProductCategoryPage.clickToAddToWishlistLinkByProductName(productShareWishlist);
     }
 
 

@@ -30,7 +30,7 @@ public class CommonSteps {
         commonPage.clickToDynamicFooterLinkByText(linkText);
     }
 
-    @And("User clicks to 'Account' link at the header")
+    @When("User clicks to 'Account' link at the header")
     public void userClickToAccountLinkHeader() {
         commonPage.clickToAccountLinkHeader();
     }
@@ -46,10 +46,16 @@ public class CommonSteps {
     }
 
 
-    @And("User clicks on the 'Mobile' link in the header navigation")
+    @When("User clicks on the 'Mobile' link in the header navigation")
     public void userClickOnTheMobileLinkInHeader() {
         commonPage.clickToMobileLinkAtHeaderNav();
     }
+
+    @When("User clicks on the 'TV' link in the header navigation")
+    public void userClicksOnTheTVLinkInTheHeaderNavigation() {
+        commonPage.clickToTVLinkAtHeaderNav();
+    }
+
 
     @Then("The cost of the product should be the same on both pages")
     public void theCostShouBeSameOnBothPages() {
@@ -57,5 +63,16 @@ public class CommonSteps {
         float productPriceAtDetailPage = (float) testContext.getSharedState().getDataContext("productPriceAtDetailPage");
         testContext.verifyEquals(productPriceAtCategoryPage, productPriceAtDetailPage);
     }
+
+    @And("User closes the `Comparison Product` window")
+    public void userClosesTheComparisonProductWindow() {
+        commonPage.closeTheComparisonProductWindow();
+    }
+
+    @Then("The {string} tab should be active")
+    public void theMyWishlistTabShouldBeActive(String link) {
+        testContext.verifyTrue(commonPage.isCurrentActiveLinkAtAccountPageByText(link));
+    }
+
 
 }

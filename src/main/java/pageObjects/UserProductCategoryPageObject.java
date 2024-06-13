@@ -44,7 +44,7 @@ public class UserProductCategoryPageObject extends BasePage {
 
     }
 
-    public UserWishListPageObject clickToAddToAddToWishlistLinkByProductName(String productName) {
+    public UserWishListPageObject clickToAddToWishlistLinkByProductName(String productName) {
         waitForElementClickable(UserProductCategoryPageUI.ADD_TO_WISHLIST_LINK_BY_PRODUCT_NAME, productName);
         clickToElement(UserProductCategoryPageUI.ADD_TO_WISHLIST_LINK_BY_PRODUCT_NAME, productName);
         return new UserWishListPageObject(driver);

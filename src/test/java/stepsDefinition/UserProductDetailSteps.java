@@ -20,4 +20,15 @@ public class UserProductDetailSteps {
         testContext.getSharedState().setDataContext("productPriceAtDetailPage", productPriceAtDetailPage);
     }
 
+    @And("User clicks on the 'Add to Cart' button")
+    public void userClickOnAddToCartButton() {
+        userProductDetailPage.clickToAddToCartButton();
+    }
+
+    @And("User clicks on the `Add to review` link")
+    public void userClicksOnTheAddToReviewLink() {
+        userProductDetailPage.clickToAddYourReviewLink();
+    }
+
+
 }

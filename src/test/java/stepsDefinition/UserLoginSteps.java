@@ -1,25 +1,23 @@
 package stepsDefinition;
 
 import hooks.TestContext;
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import pageObjects.UserAccountPageObject;
 import pageObjects.UserLoginPageObject;
 
-import java.util.List;
-import java.util.Map;
-
 public class UserLoginSteps {
     TestContext testContext;
-    private UserLoginPageObject userLoginPage;
-    private UserAccountPageObject accountPage;
+    private final UserLoginPageObject userLoginPage;
+    private final UserAccountPageObject accountPage;
+    private final SharedState sharedState;
 
     public UserLoginSteps(TestContext testContext) {
         this.testContext = testContext;
         userLoginPage = testContext.getUserLoginPage();
         accountPage = testContext.getUserAccountPage();
+        sharedState = testContext.getSharedState();
 
     }
 
@@ -34,20 +32,14 @@ public class UserLoginSteps {
     }
 
     @And("User enters the login credentials")
-    public void userEnterLoginCredentials(DataTable dataTable) {
-        String email;
-        String password;
-        if (dataTable == null) {
-            email = (String) testContext.getSharedState().getDataContext("email");
-            password = (String) testContext.getSharedState().getDataContext("password");
-        } else {
-            List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
-            email = data.get(0).get("email");
-            password = data.get(0).get("password");
-        }
+    public void userEnterLoginCredentials() {
+        System.out.println("Share state" + sharedState);
+        String email = (String) sharedState.getDataContext("email");
+        String password = (String) sharedState.getDataContext("password");
         userLoginPage.enterToDynamicTextboxById("Email", "email", email);
         userLoginPage.enterToDynamicTextboxById("Password", "pass", password);
     }
+
 
     @And("User clicks to 'Login' button")
     public void userClickToLoginButton() {

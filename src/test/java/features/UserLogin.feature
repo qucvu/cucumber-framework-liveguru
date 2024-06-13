@@ -23,6 +23,6 @@ Feature: User Login
   @loginSuccess
   Scenario: User can successfully log in with their registered data
     Given User was on the Login Page
-    And User enters the login credentials
+    When User enters the login credentials
     And User clicks to 'Login' button
     Then The 'welcome' message should be shown for full name: 'John Doe' at Dashboard

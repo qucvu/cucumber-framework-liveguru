@@ -8,10 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pageObjects.UserAccountPageObject;
-import pageObjects.UserLoginPageObject;
-import pageObjects.UserProductCategoryPageObject;
-import pageObjects.UserWishListPageObject;
+import pageObjects.*;
 import pageUIs.LiveGuruBasePageUI;
 
 import java.io.File;
@@ -786,6 +783,18 @@ public class BasePage {
         clickToElement(LiveGuruBasePageUI.DYNAMIC_LINK_AT_LEFT_SIDEBAR, linkText);
     }
 
+
+    public UserProductComparisonPageObject switchToProductComparisonPage() {
+        switchToWindowByTitle(LiveGuruBasePageUI.COMPARISON_WINDOW_TITLE);
+        return new UserProductComparisonPageObject(driver);
+    }
+
+    public void closeTheComparisonProductWindow() {
+        waitForElementClickable(LiveGuruBasePageUI.CLOSE_WINDOW_BUTTON);
+        clickToElement(LiveGuruBasePageUI.CLOSE_WINDOW_BUTTON);
+        switchToWindowByTitle(LiveGuruBasePageUI.MOBILE_WINDOW_TITLE);
+    }
+
     public boolean isCurrentActiveLinkAtAccountPageByText(String linkText) {
         waitForElementVisibility(LiveGuruBasePageUI.CURRENT_ACTIVE_LINK_AT_LEFT_SIDEBAR, linkText);
         return isElementDisplayed(LiveGuruBasePageUI.CURRENT_ACTIVE_LINK_AT_LEFT_SIDEBAR, linkText);
@@ -797,12 +806,12 @@ public class BasePage {
         return new UserAccountPageObject(driver);
     }
 
-//    public UserProductCategoryPO clickToTVLinkAtHeaderNav() {
-//        waitForElementClickable(LiveGuruBasePageUI.TV_LINK_AT_NAVIGATION_BAR);
-//        clickToElement(LiveGuruBasePageUI.TV_LINK_AT_NAVIGATION_BAR);
-//        return PageGeneratorManager.getUserProductCategoryPage(driver);
-//
-//    }
+    public UserProductCategoryPageObject clickToTVLinkAtHeaderNav() {
+        waitForElementClickable(LiveGuruBasePageUI.TV_LINK_AT_NAVIGATION_BAR);
+        clickToElement(LiveGuruBasePageUI.TV_LINK_AT_NAVIGATION_BAR);
+        return new UserProductCategoryPageObject(driver);
+
+    }
 
     public void enterToTextboxEmptyValueById(String id) {
         waitForAllElementVisibility(LiveGuruBasePageUI.DYNAMIC_TEXTBOX_BY_ID, id);

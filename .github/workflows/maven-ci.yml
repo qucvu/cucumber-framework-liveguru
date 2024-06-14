@@ -23,6 +23,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - run: sudo apt-get install google-chrome-stable
     - name: Run e2e tests
       run: mvn clean test -Dbrowser=chrome -D'app.env'=production
 

@@ -24,6 +24,7 @@ public class TestContext {
     private UserWishListPageObject userWishListPage;
     private UserProductReviewPageObject userProductReviewPage;
     private UserCheckoutPageObject userCheckoutPage;
+    private UserAdvancedSearchPageObject userAdvancedSearchPage;
 
     public TestContext() {
         ThreadGuard.protect(new DriverFactory().createDriver());
@@ -121,6 +122,12 @@ public class TestContext {
         return userCheckoutPage;
     }
 
+    public UserAdvancedSearchPageObject getUserAdvancedSearchPage() {
+        if (userAdvancedSearchPage == null) {
+            userAdvancedSearchPage = new UserAdvancedSearchPageObject(DriverManager.getDriver());
+        }
+        return userAdvancedSearchPage;
+    }
 
     public void verifyTrue(boolean condition) {
         Assert.assertTrue(condition);

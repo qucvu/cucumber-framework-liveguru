@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
                 "pretty", "html:target/cucumber-reports/TestRunnerCategoryCMS.html",
                 "json:target/cucumber-reports/TestRunnerCategoryCMS.json",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"},
-        tags = "@purchaseProduct"
+        tags = "@userSearch"
 )
 
 @Test

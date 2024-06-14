@@ -492,6 +492,12 @@ public class BasePage {
         jsExecutor.executeScript("arguments[0].removeAttribute('" + attributeRemove + "');", getWebElement(locatorType));
     }
 
+
+    public String getPageTitle() {
+        waitForElementVisibility(LiveGuruBasePageUI.PAGE_TITLE);
+        return getElementText(LiveGuruBasePageUI.PAGE_TITLE);
+    }
+
     protected boolean areJQueryAndJSLoadedSuccess() {
         WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(longTimeout));
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;

@@ -31,4 +31,5 @@ public class LiveGuruBasePageUI {
     public final static String ACCOUNT_LINK_HEADER = "css=div.account-cart-wrapper>a[data-target-element='#header-account']";
     public static final String LOGIN_LINK_AT_ACCOUNT_HEADER = "css=div#header-account a[title='Log In']";
     public static final String LOGOUT_LINK_AT_ACCOUNT_HEADER = "css=div#header-account a[title='Log Out']";
+    public static final String PAGE_TITLE = "CSS=div.page-title>h1";
 }

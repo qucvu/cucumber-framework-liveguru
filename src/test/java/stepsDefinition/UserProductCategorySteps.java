@@ -46,5 +46,16 @@ public class UserProductCategorySteps {
         userProductCategoryPage.clickToAddToWishlistLinkByProductName(productShareWishlist);
     }
 
+    @Then("The all product should be displayed with the price from {int} USD to {int} USD")
+    public void verifyProductPriceRange(int minPrice, int maxPrice) {
+        testContext.verifyTrue(userProductCategoryPage.areAllProductDisplayedWithinPriceRange(minPrice, maxPrice));
+    }
+
+    @Then("Crawl data from Product Search from {int} USD to {int} USD into the 'dataRecord' Folder")
+    public void crawlDataIntoDataRecordFolder(int minPrice, int maxPrice) {
+        userProductCategoryPage.crawlProductDataByPriceRange(minPrice, maxPrice);
+
+    }
+
 
 }

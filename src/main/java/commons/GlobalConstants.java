@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 
 public class GlobalConstants {
     public final static String PROJECT_PATH = System.getProperty("user.dir");
-    public static final boolean HEADLESS = false;
+    public static final boolean HEADLESS = true;
     public static final String DATA_RECORD = PROJECT_PATH + "dataRecord" + File.separator;
     private final static String USER_PROFILE = System.getProperty("user.home");
     public final static String OS_NAME = System.getProperty("os.name");

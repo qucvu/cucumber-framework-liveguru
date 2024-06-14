@@ -11,7 +11,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  run-e2e:
 
     runs-on: ubuntu-latest
     steps:
@@ -23,9 +23,12 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+
+    - name: Setup Chrome
+      uses: browser-actions/setup-chrome@v1.7.1
     - run: sudo apt-get install google-chrome-stable
     - name: Run e2e tests
-      run: mvn clean test -Dbrowser=edge -D'app.env'=production
+      run: mvn clean test -Dbrowser=chrome -D'app.env'=production
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph

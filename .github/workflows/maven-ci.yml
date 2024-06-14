@@ -1,8 +1,6 @@
 # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
 
-# This workflow uses actions that are not certified by GitHub.
-
 name: Java CI with Maven 
 run-name: Run maven e2e UI testing on production env from @${{ github.actor }}
 
@@ -26,11 +24,11 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -Dbrowser=chrome -Dapp.env=production -B package --file pom.xml
+      run: mvn -Dbrowser=chrome -D'app.env'=production -B package --file pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
     - name: Run e2e tests
-      run: mvn clean test -Dbrowser=chrome -Dapp.env=production -f pom.xml 
+      run: mvn clean test -Dbrowser=chrome -D'app.env'=production -f pom.xml 
 

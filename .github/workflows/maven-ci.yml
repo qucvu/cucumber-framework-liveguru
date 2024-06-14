@@ -25,7 +25,7 @@ jobs:
         cache: maven
     - run: sudo apt-get install google-chrome-stable
     - name: Run e2e tests
-      run: mvn clean test -Dbrowser=firefox -D'app.env'=production
+      run: mvn clean test -Dbrowser=edge -D'app.env'=production
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph

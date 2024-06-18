@@ -27,8 +27,8 @@ jobs:
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1.7.1
 
-      - name: Run e2e tests
-        run: mvn clean test -Dbrowser=chrome -D'app.env'=production
+      - name: Run e2e tests on chrome - production env
+        run: mvn clean test -Dbrowser=chrome
 
       - name: run check
         run: mvn clean

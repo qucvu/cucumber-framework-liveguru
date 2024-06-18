@@ -7,7 +7,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import pageObjects.UserHomePageObject;
+import pageObjects.user.UserHomePageObject;
 
 public class CommonSteps {
     TestContext testContext;
@@ -22,7 +22,7 @@ public class CommonSteps {
 
     @Given("User was on the end user site")
     public void userWasOnTheEndUserSite() {
-        commonPage.openPageUrl(ConfigLoaderEnvironment.config.getString("app.EndUserUrl"));
+        commonPage.openPageUrl(ConfigLoaderEnvironment.config.getString("app.endUserUrl"));
     }
 
     @When("User clicks to {string} link at the footer")

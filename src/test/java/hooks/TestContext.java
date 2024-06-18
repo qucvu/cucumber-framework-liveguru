@@ -6,7 +6,7 @@ import driver.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ThreadGuard;
 import org.testng.Assert;
-import pageObjects.*;
+import pageObjects.user.*;
 import reportConfigs.AllureManager;
 import stepsDefinition.SharedState;
 

@@ -2,7 +2,7 @@ package stepsDefinition;
 
 import hooks.TestContext;
 import io.cucumber.java.en.And;
-import pageObjects.UserProductDetailPageObject;
+import pageObjects.user.UserProductDetailPageObject;
 
 public class UserProductDetailSteps {
     TestContext testContext;

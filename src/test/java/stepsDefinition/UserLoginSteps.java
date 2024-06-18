@@ -4,8 +4,8 @@ import hooks.TestContext;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import pageObjects.UserAccountPageObject;
-import pageObjects.UserLoginPageObject;
+import pageObjects.user.UserAccountPageObject;
+import pageObjects.user.UserLoginPageObject;
 
 public class UserLoginSteps {
     TestContext testContext;

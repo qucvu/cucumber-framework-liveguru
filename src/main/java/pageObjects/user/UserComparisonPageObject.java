@@ -1,11 +1,11 @@
-package pageObjects;
+package pageObjects.user;
 
 import commons.BasePage;
 import org.openqa.selenium.WebDriver;
 import pageUIs.UserProductComparisonPageUI;
 
-public class UserProductComparisonPageObject extends BasePage {
-    public UserProductComparisonPageObject(WebDriver driver) {
+public class UserComparisonPageObject extends BasePage {
+    public UserComparisonPageObject(WebDriver driver) {
         super(driver);
     }
 
@@ -34,5 +34,6 @@ public class UserProductComparisonPageObject extends BasePage {
         waitForElementVisibility(UserProductComparisonPageUI.PRODUCT_SKU_COMPARISON_BY_PRODUCT_NAME, productName, productSKU);
         return isElementDisplayed(UserProductComparisonPageUI.PRODUCT_SKU_COMPARISON_BY_PRODUCT_NAME, productName, productSKU);
     }
+
 
 }

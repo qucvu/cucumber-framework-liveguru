@@ -3,7 +3,7 @@ package stepsDefinition;
 import hooks.TestContext;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import pageObjects.UserProductReviewPageObject;
+import pageObjects.user.UserProductReviewPageObject;
 
 public class UserProductReviewSteps {
     TestContext testContext;

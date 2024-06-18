@@ -2,7 +2,7 @@ package stepsDefinition;
 
 import hooks.TestContext;
 import io.cucumber.java.en.Then;
-import pageObjects.UserProductComparisonPageObject;
+import pageObjects.user.UserProductComparisonPageObject;
 
 public class UserProductComparisonSteps {
     private final TestContext testContext;

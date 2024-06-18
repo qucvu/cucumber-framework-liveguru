@@ -6,8 +6,8 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import pageObjects.UserAccountPageObject;
-import pageObjects.UserRegisterPageObject;
+import pageObjects.user.UserAccountPageObject;
+import pageObjects.user.UserRegisterPageObject;
 import utilities.DataHelper;
 
 import java.util.Map;

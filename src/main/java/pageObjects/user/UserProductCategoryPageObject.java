@@ -1,4 +1,4 @@
-package pageObjects;
+package pageObjects.user;
 
 import commons.BasePage;
 import commons.GlobalConstants;

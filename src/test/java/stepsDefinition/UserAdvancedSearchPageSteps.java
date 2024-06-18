@@ -3,7 +3,7 @@ package stepsDefinition;
 import hooks.TestContext;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
-import pageObjects.UserAdvancedSearchPageObject;
+import pageObjects.user.UserAdvancedSearchPageObject;
 
 public class UserAdvancedSearchPageSteps {
     TestContext testContext;

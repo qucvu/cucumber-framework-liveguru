@@ -2,6 +2,7 @@ package driver;
 
 import commons.GlobalConstants;
 import enums.Browser;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -42,6 +43,7 @@ public class DriverFactory {
 
     private WebDriver initChromeDriver() {
         WebDriver driver;
+        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         if (GlobalConstants.HEADLESS) {
             options.addArguments("--headless=new");
@@ -50,9 +52,7 @@ public class DriverFactory {
             options.addArguments("--start-maximized");
         }
         options.addArguments("--disable-infobars", "--disable-new-bookmark-apps");
-
         driver = new ChromeDriver(options);
-
         return driver;
     }
 

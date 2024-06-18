@@ -4,7 +4,7 @@ import hooks.TestContext;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import pageObjects.UserAccountPageObject;
+import pageObjects.user.UserAccountPageObject;
 
 import java.util.List;
 import java.util.Map;

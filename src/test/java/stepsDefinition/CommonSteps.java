@@ -22,7 +22,18 @@ public class CommonSteps {
 
     @Given("User was on the end user site")
     public void userWasOnTheEndUserSite() {
-        commonPage.openPageUrl(ConfigLoaderEnvironment.config.getString("app.endUserUrl"));
+        commonPage.openPageUrl(ConfigLoaderEnvironment.config.getString("app.endUserUrl").split(";")[0]);
+    }
+
+
+    @Given("User was on the Admin site")
+    public void userWasOnAdminSite() {
+        commonPage.openPageUrl(ConfigLoaderEnvironment.config.getString("app.adminUrl"));
+    }
+
+    @Given("User navigates to the Admin Page")
+    public void userNavigatesToAdminPage() {
+        commonPage.openPageUrl(ConfigLoaderEnvironment.config.getString("app.adminUrl"));
     }
 
     @When("User clicks to {string} link at the footer")

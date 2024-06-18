@@ -6,6 +6,8 @@ import driver.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ThreadGuard;
 import org.testng.Assert;
+import pageObjects.admin.AdminLoginPageObject;
+import pageObjects.admin.AdminManageCustomerPageObject;
 import pageObjects.user.*;
 import reportConfigs.AllureManager;
 import stepsDefinition.SharedState;
@@ -25,6 +27,8 @@ public class TestContext {
     private UserProductReviewPageObject userProductReviewPage;
     private UserCheckoutPageObject userCheckoutPage;
     private UserAdvancedSearchPageObject userAdvancedSearchPage;
+    private AdminLoginPageObject adminLoginPage;
+    private AdminManageCustomerPageObject adminManageCustomerPage;
 
     public TestContext() {
         ThreadGuard.protect(new DriverFactory().createDriver());
@@ -128,6 +132,22 @@ public class TestContext {
         }
         return userAdvancedSearchPage;
     }
+
+    public AdminLoginPageObject getAdminLoginPage() {
+        if (adminLoginPage == null) {
+            adminLoginPage = new AdminLoginPageObject(DriverManager.getDriver());
+        }
+        return adminLoginPage;
+    }
+
+
+    public AdminManageCustomerPageObject getAdminManageCustomerPage() {
+        if (adminManageCustomerPage == null) {
+            adminManageCustomerPage = new AdminManageCustomerPageObject(DriverManager.getDriver());
+        }
+        return adminManageCustomerPage;
+    }
+
 
     public void verifyTrue(boolean condition) {
         Assert.assertTrue(condition);

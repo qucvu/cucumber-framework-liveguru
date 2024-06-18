@@ -26,12 +26,13 @@ public class DriverFactory {
     }
 
     private WebDriver setupBrowser(String browserName) {
-        WebDriver driver;
+        WebDriver driver = null;
         Browser browser = Browser.valueOf(browserName.toUpperCase());
         switch (browser) {
             case CHROME -> driver = initChromeDriver();
             case FIREFOX -> driver = initFirefoxDriver();
             case EDGE -> driver = initEdgeDriver();
+            case CHROME_HEADLESS -> driver = initChromeHeadlessDriver();
             default -> {
                 System.out.println("Browser: " + browserName + " is invalid, Launching Chrome browser default...");
                 driver = initChromeDriver();
@@ -40,12 +41,21 @@ public class DriverFactory {
         return driver;
     }
 
+    private WebDriver initChromeHeadlessDriver() {
+        WebDriver driver;
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new");
+        options.addArguments("window-size=1800,900");
+        driver = new ChromeDriver(options);
+        return driver;
+    }
+
     private WebDriver initChromeDriver() {
         WebDriver driver;
         ChromeOptions options = new ChromeOptions();
         if (GlobalConstants.HEADLESS) {
             options.addArguments("--headless=new");
-//            options.addArguments("window-size=1800,900");
+            options.addArguments("window-size=1800,900");
         } else {
             options.addArguments("--start-maximized");
         }

@@ -28,7 +28,7 @@ jobs:
         uses: browser-actions/setup-chrome@v1.7.1
 
       - name: Run e2e tests on chrome - production env
-        run: mvn clean test -Dbrowser=chrome
+        run: mvn clean test -Dbrowser=chrome_headless
 
       
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive

@@ -30,9 +30,6 @@ jobs:
       - name: Run e2e tests on chrome - production env
         run: mvn clean test -Dbrowser=chrome
 
-      - name: run check
-        run: mvn clean
-
       
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
 #      - name: Update dependency graph

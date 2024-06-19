@@ -36,4 +36,24 @@ public class UserAccountSteps {
         testContext.verifyEquals(userAccountPage.getValueTextboxById("firstname"), data.get("firstName"));
         testContext.verifyEquals(userAccountPage.getValueTextboxById("lastname"), data.get("lastName"));
     }
+
+    @And("User enters the Account Information with Email {string}, First Name {string}, Last Name {string}")
+    public void userEntersAccountInformation(String email, String firstName, String lastName) {
+        userAccountPage.enterToDynamicTextboxById("First Name", "firstname", firstName);
+        userAccountPage.enterToDynamicTextboxById("Last Name", "lastname", lastName);
+        userAccountPage.enterToDynamicTextboxById("Email", "email", email);
+        userAccountPage.enterToDynamicTextboxById("Current Password", "current_password", (String) testContext.getSharedState().getDataContext("password"));
+    }
+
+    @And("User clicks on the `Save` button")
+    public void userClicksOnTheSaveButton() {
+        userAccountPage.clickToSaveButton();
+    }
+
+    @Then("The {string} message should be displayed under the Page Title")
+    public void messageShouldBeDisplayedUnderPageTitle(String expectedMessage) {
+        testContext.verifyEquals(userAccountPage.getCurrentMessageUnderPageTitle(), expectedMessage);
+    }
+
+
 }

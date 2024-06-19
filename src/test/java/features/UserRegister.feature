@@ -16,7 +16,7 @@ Feature: User Register
       | Email            | unique_email |
       | Password         | password123  |
       | Confirm Password | password123  |
-    And User click to the `Register` button
+    When User click to the `Register` button
     Then The `register successfully` message should be shown
 
   @registerSuccessWithData
@@ -28,7 +28,7 @@ Feature: User Register
       | Email            | <email>           |
       | Password         | <password>        |
       | Confirm Password | <confirmPassword> |
-    And User click to the `Register` button
+    When User click to the `Register` button
     Then The `register successfully` message should be shown
     And User click to 'Account Information' link at the left sidebar
     Then User should navigate to the 'Account Information' link

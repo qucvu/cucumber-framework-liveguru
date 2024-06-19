@@ -25,6 +25,10 @@ public class CommonSteps {
         commonPage.openPageUrl(ConfigLoaderEnvironment.config.getString("app.endUserUrl").split(";")[0]);
     }
 
+    @Given("User navigates to the End User Page")
+    public void userNavigatesToEndUserPage() {
+        commonPage.openPageUrl(ConfigLoaderEnvironment.config.getString("app.endUserUrl").split(";")[0]);
+    }
 
     @Given("User was on the Admin site")
     public void userWasOnAdminSite() {
@@ -83,6 +87,35 @@ public class CommonSteps {
     @Then("The {string} tab should be active")
     public void theMyWishlistTabShouldBeActive(String link) {
         testContext.verifyTrue(commonPage.isCurrentActiveLinkAtAccountPageByText(link));
+    }
+
+    @And("User clicks to the `My Account'  link at the header")
+    public void userClicksMyAccountLinkHeader() {
+        commonPage.clickToMyAccountLinkAtAccountLinkHeader();
+    }
+
+    @And("User navigates to the Admin Manage Review page from Admin Home Page")
+    public void userNavigatesToAdminManageReviewPage() {
+        commonPage.hoverToDynamicHeaderLinkByNameAdminPage("Catalog");
+        commonPage.hoverToDynamicHeaderLinkByNameAdminPage("Reviews and Ratings");
+        commonPage.hoverToDynamicHeaderLinkByNameAdminPage("Customer Reviews");
+        commonPage.clickToDynamicHeaderLinkByNameAdminPage("All Reviews");
+    }
+
+    @And("User navigates to the Admin Manage Customer page from the Admin Home Page")
+    public void userNavigatesToAdminManageCustomerPage() {
+        commonPage.hoverToDynamicHeaderLinkByNameAdminPage("Customers");
+        commonPage.clickToDynamicHeaderLinkByNameAdminPage("Manage Customers");
+    }
+
+    @And("User clicks on the Submit button")
+    public void userClicksOnTheButtonAdminPage() {
+        commonPage.clickToSubmitButtonAdminPage();
+    }
+
+    @Then("the {string} message should be displayed above the Admin Page header")
+    public void messageShouldBeDisplayedAboveAdminPageHeader(String expectedMessage) {
+        testContext.verifyTrue(commonPage.isMessageDisplayedAboveHeaderAdminPage(expectedMessage));
     }
 
 

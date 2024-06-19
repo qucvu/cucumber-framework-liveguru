@@ -46,10 +46,10 @@ public class UserLoginSteps {
         userLoginPage.clickToLoginButton();
     }
 
-    @Then("The 'welcome' message should be shown for full name: {string} at Dashboard")
-    public void theWelcomeMessageShouldBeShown(String fullName) {
-        testContext.verifyEquals(accountPage.getCurrentTabTitle(), "MY DASHBOARD");
-        testContext.verifyTrue(accountPage.isWelcomeMessageIsDisplayedAtMyDashboard(fullName));
+
+    @Then("The {string} message should be displayed under the Login Page Title")
+    public void messageShouldBeDisplayedUnderLoginPageTitle(String expectedMessage) {
+        testContext.verifyEquals(userLoginPage.getErrorMessageUnderPageTitle(), expectedMessage);
     }
 
 }

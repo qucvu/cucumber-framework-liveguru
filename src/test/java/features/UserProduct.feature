@@ -40,7 +40,6 @@ Feature: User View product, Purchase Product
     And User applies discount code: <couponCode>
     Then The discount price should be displayed with value <discountPrice>
     And The 'Grand Total' price should be displayed with value <grandTotalAfterDiscount>
-
     Examples:
       | productName   | couponCode | discountPrice | grandTotalAfterDiscount |
       | 'Sony Xperia' | 'GURU50'   | 5.00          | 95.00                   |

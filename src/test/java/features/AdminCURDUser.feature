@@ -1,7 +1,7 @@
 @adminCrudUSer
 Feature: Admin show data user properly
 
-  Background:
+  Background: User navigate to the Manage Customer Page
     Given User was on the Admin site
     When User enters the valid login credentials on the Admin Login Page
     And User clicks the `Login` button on the Admin Login Page
@@ -106,7 +106,7 @@ Feature: Admin show data user properly
     And User selects the Customer checkbox by email "<email>"
     Then The selected current Customer count in the table should be 1
     And User selects 'Delete' in the Action dropdown
-    And User clicks on the Submit button
+    And User clicks on the Submit button Admin Page
     And User accepts the Delete Alert
     Then the "Total of 1 record(s) were deleted." message should be displayed above the Admin Page header
     Then The account is undisplayed At the Customer Table

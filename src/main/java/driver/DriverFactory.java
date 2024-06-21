@@ -10,6 +10,9 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DriverFactory {
 
     public WebDriver createDriver() {
@@ -53,13 +56,17 @@ public class DriverFactory {
     private WebDriver initChromeDriver() {
         WebDriver driver;
         ChromeOptions options = new ChromeOptions();
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", GlobalConstants.DOWNLOAD_FILE_FOLDER);
+        prefs.put("profile.default_content_settings.popups", 0);
         if (GlobalConstants.HEADLESS) {
             options.addArguments("--headless=new");
             options.addArguments("window-size=1800,900");
         } else {
             options.addArguments("--start-maximized");
+            options.setExperimentalOption("prefs", prefs);
         }
-//        options.addArguments("--disable-infobars", "--disable-new-bookmark-apps");
+        options.addArguments("--disable-infobars", "--disable-new-bookmark-apps");
         driver = new ChromeDriver(options);
         return driver;
     }

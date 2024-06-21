@@ -922,7 +922,6 @@ public class BasePage {
         File downloadedFile = new File(expectedFullPathName);
         System.out.println("Download file: " + downloadedFile);
         long startTime = System.currentTimeMillis();
-
         while (!downloadedFile.exists()) {
             long currentTime = System.currentTimeMillis();
             long elapsedTime = TimeUnit.MILLISECONDS.toSeconds(currentTime - startTime);

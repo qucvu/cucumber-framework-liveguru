@@ -25,4 +25,10 @@ public class AdminManageReviewPageObject extends BasePage {
         return new AdminReviewDetailPageObject(driver);
     }
 
+    public void clickToSaveReviewButton() {
+        waitForElementClickable(AdminManageReviewPageUI.SAVE_REVIEW_BUTTON);
+        clickToElement(AdminManageReviewPageUI.SAVE_REVIEW_BUTTON);
+    }
+
+
 }

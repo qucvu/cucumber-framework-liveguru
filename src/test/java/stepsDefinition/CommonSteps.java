@@ -102,20 +102,69 @@ public class CommonSteps {
         commonPage.clickToDynamicHeaderLinkByNameAdminPage("All Reviews");
     }
 
+
+    @And("User navigates to the Admin Manage Pending Review page from Admin Home Page")
+    public void userNavigatesToAdminManagePendingReviewPage() {
+        commonPage.hoverToDynamicHeaderLinkByNameAdminPage("Catalog");
+        commonPage.hoverToDynamicHeaderLinkByNameAdminPage("Reviews and Ratings");
+        commonPage.hoverToDynamicHeaderLinkByNameAdminPage("Customer Reviews");
+        commonPage.clickToDynamicHeaderLinkByNameAdminPage("Pending Reviews");
+    }
+
+
     @And("User navigates to the Admin Manage Customer page from the Admin Home Page")
     public void userNavigatesToAdminManageCustomerPage() {
         commonPage.hoverToDynamicHeaderLinkByNameAdminPage("Customers");
         commonPage.clickToDynamicHeaderLinkByNameAdminPage("Manage Customers");
     }
 
-    @And("User clicks on the Submit button")
+    @When("User navigates to the Admin Order page from Admin Home Page")
+    public void userNavigatesToAdminManageOrderPage() {
+        commonPage.hoverToDynamicHeaderLinkByNameAdminPage("Sales");
+        commonPage.clickToDynamicHeaderLinkByNameAdminPage("Orders");
+
+    }
+
+
+    @And("User clicks on the Submit button Admin Page")
     public void userClicksOnTheButtonAdminPage() {
         commonPage.clickToSubmitButtonAdminPage();
     }
 
+
+    @And("User clicks on the `Search` button Admin Page")
+    public void userClicksOnTheSearchButtonAdminPage() {
+        commonPage.clickToSearchButtonAdminPage();
+    }
+
+
+    @And("User selects {string} in the Filter Status dropdown")
+    public void userSelectTheFilterStatusDropdown(String action) {
+        commonPage.selectToDefaultDropdownById("sales_order_grid_filter_status", action);
+
+    }
+
+    @And("User selects {string} in the Action dropdown")
+    public void userSelectsDeleteInActionDropdown(String action) {
+        commonPage.selectToDefaultDropdownById("sales_order_grid_massaction-select", action);
+    }
+
+
     @Then("the {string} message should be displayed above the Admin Page header")
     public void messageShouldBeDisplayedAboveAdminPageHeader(String expectedMessage) {
         testContext.verifyTrue(commonPage.isMessageDisplayedAboveHeaderAdminPage(expectedMessage));
+    }
+
+    @And("User clicks on the Sort {string} column with value descending")
+    public void userClicksColumnSortAscending(String columnName) {
+        commonPage.clickToSortDESCByTitle(columnName);
+    }
+
+
+    @Then("The quantity of selected checkboxes should be {int}")
+    public void theQuantityOfSelectedCheckboxesShouldBe(int expectedCount) {
+        testContext.verifyEquals(commonPage.getQuantityItemSelectedCheckboxAdminPage(), expectedCount);
+        
     }
 
 

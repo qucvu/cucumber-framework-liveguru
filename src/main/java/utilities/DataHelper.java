@@ -3,6 +3,8 @@ package utilities;
 
 import net.datafaker.Faker;
 import net.datafaker.providers.base.Finance;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.nio.ByteBuffer;
 import java.util.Base64;
@@ -97,5 +99,28 @@ public class DataHelper {
     public String getCardCodeNumber() {
         return faker.number().digits(3);
     }
+
+    public String getCurrentDate() {
+        DateTime nowUTC = new DateTime(DateTimeZone.UTC);
+        int day = nowUTC.getDayOfMonth();
+        if (day < 10) {
+            return "0" + day;
+
+        }
+        return String.valueOf(day);
+    }
+
+    public String getCurrentMonth() {
+        DateTime now = new DateTime(DateTimeZone.UTC);
+        return now.toString("MM");
+
+    }
+
+
+    public String getCurrentYear() {
+        DateTime now = new DateTime(DateTimeZone.UTC);
+        return String.valueOf(now.getYear());
+    }
+
 
 }

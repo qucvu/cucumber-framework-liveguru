@@ -24,9 +24,10 @@ public class AdminManageInvoicePageObject extends BasePage {
         }
         List<Float> sortList = new ArrayList<Float>(dataList);
         Collections.sort(sortList);
-        if (!option.equals("asc")) {
+        if (!option.equals("ascending")) {
             Collections.reverse(sortList);
         }
+
         return sortList.equals(dataList);
     }
 

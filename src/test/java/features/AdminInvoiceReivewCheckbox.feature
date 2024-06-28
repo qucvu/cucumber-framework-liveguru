@@ -1,5 +1,5 @@
 @adminInvoiceReview
-Feature: Admin can sort, search with pagination
+Feature: The invoice, Review and check functionality can work proplery
 
   Background: User navigate to the Manage Customer Page
     Given User was on the Admin site

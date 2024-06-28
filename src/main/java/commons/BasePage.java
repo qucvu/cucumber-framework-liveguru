@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class BasePage {
     private final int longTimeout = GlobalConstants.LONG_TIMEOUT;
@@ -635,7 +636,7 @@ public class BasePage {
 
     public boolean isDataStringSortAscLamDa(String locatorType, String... dynamicValues) {
         List<WebElement> elementList = getListElements(locatorType, dynamicValues);
-        List<String> dataList = elementList.stream().map(WebElement::getText).toList();
+        List<String> dataList = elementList.stream().map(n -> n.getText()).collect(Collectors.toList());
         List<String> sortList = new ArrayList<String>(dataList);
         Collections.sort(sortList);
         return sortList.equals(dataList);
@@ -920,7 +921,6 @@ public class BasePage {
 
     public boolean waitForFileToDownload(String expectedFullPathName, int maxWaitSeconds) {
         File downloadedFile = new File(expectedFullPathName);
-        System.out.println("Download file: " + downloadedFile);
         long startTime = System.currentTimeMillis();
         while (!downloadedFile.exists()) {
             long currentTime = System.currentTimeMillis();
@@ -949,18 +949,26 @@ public class BasePage {
     }
 
     public void clickToSortASCByTitle(String title) {
-        waitForElementVisibility(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+        waitForLoadingMaskUnInvisibility();
+        waitForElementClickable(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+        clickToElement(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+        waitForLoadingMaskUnInvisibility();
         String titleAttribute = getElementAttribute("title", LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
-        if (titleAttribute.equals("asc")) {
+        if (!titleAttribute.equals("desc")) {
+            waitForLoadingMaskUnInvisibility();
             waitForElementClickable(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
             clickToElement(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
         }
     }
 
     public void clickToSortDESCByTitle(String title) {
-        waitForElementVisibility(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+        waitForLoadingMaskUnInvisibility();
+        waitForElementClickable(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+        clickToElement(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
+        waitForLoadingMaskUnInvisibility();
         String titleAttribute = getElementAttribute("title", LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
-        if (titleAttribute.equals("desc")) {
+        if (!titleAttribute.equals("asc")) {
+            waitForLoadingMaskUnInvisibility();
             waitForElementClickable(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
             clickToElement(LiveGuruBasePageUI.SORT_TITLE_BY_TITLE, title);
         }
@@ -971,7 +979,6 @@ public class BasePage {
         waitForLoadingMaskUnInvisibility();
         waitForAllElementVisibility(LiveGuruBasePageUI.CHECKBOX_ROW_ITEM);
         List<WebElement> checkboxList = getListElements(LiveGuruBasePageUI.CHECKBOX_ROW_ITEM);
-        System.out.println("Size:" + checkboxList.size());
         int countCheckboxSelected = 0;
         for (WebElement checkbox : checkboxList) {
             if (checkbox.isSelected()) {
@@ -1000,7 +1007,7 @@ public class BasePage {
         int columnIndex = getElementsSize(LiveGuruBasePageUI.INDEX_COLUMN_BY_COLUMN_NAME, columnName) + 1;
         waitForLoadingMaskUnInvisibility();
         waitForAllElementVisibility(LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
-        if (option.equals("asc")) {
+        if (option.equals("ascending")) {
             return isDataDateSortByOption("asc", LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
         }
         return isDataDateSortByOption("desc", LiveGuruBasePageUI.COLUMN_DATA_BY_INDEX_COLUMN, String.valueOf(columnIndex));
@@ -1022,7 +1029,7 @@ public class BasePage {
 
     }
 
-    public int getQuantityItemRowDisplayedAdminPage(WebDriver driver) {
+    public int getQuantityItemRowDisplayedAdminPage() {
         waitForLoadingMaskUnInvisibility();
         waitForAllElementVisibility(LiveGuruBasePageUI.CHECKBOX_ROW_ITEM);
         return getElementsSize(LiveGuruBasePageUI.CHECKBOX_ROW_ITEM);

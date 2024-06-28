@@ -1,5 +1,6 @@
 package stepsDefinition;
 
+import commons.BasePage;
 import hooks.TestContext;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -13,11 +14,13 @@ import java.util.Map;
 public class AdminManageCustomerPageSteps {
     TestContext testContext;
     private AdminManageCustomerPageObject adminManageCustomerPage;
+    private BasePage commonPage;
 
 
     public AdminManageCustomerPageSteps(TestContext testContext) {
         this.testContext = testContext;
         adminManageCustomerPage = testContext.getAdminManageCustomerPage();
+        commonPage = testContext.getBasePage();
     }
 
     @When("User dismisses the `Incoming Message` popup if it appears")
@@ -60,7 +63,6 @@ public class AdminManageCustomerPageSteps {
         adminManageCustomerPage.acceptTheDeleteAlert();
     }
 
-
     @Then("The account is undisplayed At the Customer Table")
     public void accountShouldNotBeDisplayedInCustomerTable(DataTable dataTable) {
         List<Map<String, String>> dataList = dataTable.asMaps();
@@ -71,5 +73,11 @@ public class AdminManageCustomerPageSteps {
         testContext.verifyTrue(adminManageCustomerPage.isFullNameUndisplayedAtNameColumnCustomerTableByEmail(email, fullName));
     }
 
+    @Then("User enters the 'Filter' Customer text box at Admin Page with email: {string} and full name: {string}")
+    public void userEnterTheFilterCustomerNameAndEmail(String email, String fullName) {
+        email = email.equals("unique_email") ? (String) testContext.getSharedState().getDataContext("email") : email;
+        commonPage.enterToDynamicTextboxById("Filter Email", "customerGrid_filter_email", email);
+        commonPage.enterToDynamicTextboxById("Filter Name", "customerGrid_filter_name", fullName);
+    }
 
 }

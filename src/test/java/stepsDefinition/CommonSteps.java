@@ -125,6 +125,12 @@ public class CommonSteps {
 
     }
 
+    @When("User navigates to the Admin Manage Invoice page from Admin Home Page")
+    public void userNavigatesToAdminManageInvoicePage() {
+        commonPage.hoverToDynamicHeaderLinkByNameAdminPage("Sales");
+        commonPage.clickToDynamicHeaderLinkByNameAdminPage("Invoices");
+    }
+
 
     @And("User clicks on the Submit button Admin Page")
     public void userClicksOnTheButtonAdminPage() {
@@ -156,15 +162,57 @@ public class CommonSteps {
     }
 
     @And("User clicks on the Sort {string} column with value descending")
-    public void userClicksColumnSortAscending(String columnName) {
+    public void userClicksColumnSortDescending(String columnName) {
         commonPage.clickToSortDESCByTitle(columnName);
+    }
+
+    @And("User clicks on the Sort {string} column with value ascending")
+    public void userClicksColumnSortAscending(String columnName) {
+        commonPage.clickToSortASCByTitle(columnName);
     }
 
 
     @Then("The quantity of selected checkboxes should be {int}")
     public void theQuantityOfSelectedCheckboxesShouldBe(int expectedCount) {
         testContext.verifyEquals(commonPage.getQuantityItemSelectedCheckboxAdminPage(), expectedCount);
-        
+    }
+
+    @Then("The column {string} number should be sorted ascending")
+    public void columnNumberShouldBeSortedAsc(String columnName) {
+        testContext.verifyTrue(commonPage.isDataNumberSortASCByTitleColumn(columnName));
+    }
+
+    @Then("The column {string} number should be sorted descending")
+    public void columnNumberShouldBeSortedDesc(String columnName) {
+        testContext.verifyTrue(commonPage.isDataNumberSortDESCByTitleColumn(columnName));
+
+    }
+
+    @Then("The column {string} date should be sorted {string}")
+    public void columnDateShouldBeSorted(String columnName, String option) {
+        testContext.verifyTrue(commonPage.isDataDateSortByTitleColumnAndOption(columnName, option));
+    }
+
+    @Then("The column {string} string should be sorted ascending")
+    public void columnStringShouldBeSortedAsc(String columnName) {
+        testContext.verifyTrue(commonPage.isDataStringSortASCByTitleColumn(columnName));
+
+    }
+
+    @Then("The column {string} string should be sorted descending")
+    public void columnStringShouldBeSortedDesc(String columnName) {
+        testContext.verifyTrue(commonPage.isDataStringSortDESCByTitleColumn(columnName));
+
+    }
+
+    @When("User selects `View Per Page` dropdown Admin Page with value {string}")
+    public void selectViewPerPageDropdown(String dropdownValue) {
+        commonPage.selectToViewPerPageDropdownAdminPage(dropdownValue);
+    }
+
+    @Then("The quantity of the item row should be {int} Admin Page")
+    public void quantityItemRowShouldBeEqual(int quantity) {
+        testContext.verifyEquals(commonPage.getQuantityItemRowDisplayedAdminPage(), quantity);
     }
 
 

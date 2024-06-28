@@ -6,10 +6,7 @@ import driver.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ThreadGuard;
 import org.testng.Assert;
-import pageObjects.admin.AdminLoginPageObject;
-import pageObjects.admin.AdminManageCustomerPageObject;
-import pageObjects.admin.AdminManageOrderPageObject;
-import pageObjects.admin.AdminManageReviewPageObject;
+import pageObjects.admin.*;
 import pageObjects.user.*;
 import reportConfigs.AllureManager;
 import stepsDefinition.SharedState;
@@ -33,6 +30,7 @@ public class TestContext {
     private AdminManageCustomerPageObject adminManageCustomerPage;
     private AdminManageReviewPageObject adminManageReviewPage;
     private AdminManageOrderPageObject adminManageOrderPage;
+    private AdminManageInvoicePageObject adminManageInvoicePage;
 
     public TestContext() {
         ThreadGuard.protect(new DriverFactory().createDriver());
@@ -166,6 +164,13 @@ public class TestContext {
             adminManageOrderPage = new AdminManageOrderPageObject(DriverManager.getDriver());
         }
         return adminManageOrderPage;
+    }
+
+    public AdminManageInvoicePageObject getAdminManageInvoicePage() {
+        if (adminManageInvoicePage == null) {
+            adminManageInvoicePage = new AdminManageInvoicePageObject(DriverManager.getDriver());
+        }
+        return adminManageInvoicePage;
     }
 
 
